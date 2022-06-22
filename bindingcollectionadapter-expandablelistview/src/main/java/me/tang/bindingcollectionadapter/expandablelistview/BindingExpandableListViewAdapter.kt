@@ -108,6 +108,7 @@ class BindingExpandableListViewAdapter<T, T2> : BaseExpandableListAdapter(),
 
     override fun setGroupBinding(itemBinding: ItemBinding<T>) {
         _groupBinding = itemBinding
+        notifyDataSetChanged()
     }
 
     override fun getGroupBinding(): ItemBinding<T> {
@@ -116,6 +117,7 @@ class BindingExpandableListViewAdapter<T, T2> : BaseExpandableListAdapter(),
 
     override fun setGroups(items: List<T>) {
         _groups = items
+        notifyDataSetChanged()
     }
 
     override fun getAdapterGroup(groupPosition: Int): T {
