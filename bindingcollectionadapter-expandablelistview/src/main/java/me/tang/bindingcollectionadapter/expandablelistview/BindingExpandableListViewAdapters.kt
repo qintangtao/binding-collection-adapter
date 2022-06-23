@@ -6,7 +6,7 @@ import me.tang.bindingcollectionadapter.ItemBinding
 
 object BindingExpandableListViewAdapters {
 
-
+    @JvmStatic
     @BindingAdapter(
         value = ["groupBinding", "groups", "childBinding", "childrens"],
         requireAll = false

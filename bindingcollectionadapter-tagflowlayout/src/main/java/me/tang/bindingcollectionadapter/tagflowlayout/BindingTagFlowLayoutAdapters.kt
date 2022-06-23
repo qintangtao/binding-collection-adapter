@@ -6,6 +6,7 @@ import me.tang.bindingcollectionadapter.ItemBinding
 
 object BindingTagFlowLayoutAdapters {
 
+    @JvmStatic
     @BindingAdapter(value = ["itemBinding", "items", "selected"], requireAll = false)
     fun  <T>  setAdapter(layout: TagFlowLayout, itemBinding: ItemBinding<T>, items: List<T>?, selected: Int?) {
         requireNotNull(itemBinding) { "itemBinding must not be null" }
@@ -22,6 +23,7 @@ object BindingTagFlowLayoutAdapters {
         }
     }
 
+    @JvmStatic
     @BindingAdapter(value = ["onTagClick"], requireAll = false)
     fun setOnTagClickListener(layout: TagFlowLayout, listener: TagFlowLayout.OnTagClickListener) {
         layout.setOnTagClickListener(listener)
