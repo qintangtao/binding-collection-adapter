@@ -18,6 +18,15 @@ class ItemBinding<T> private constructor(
         fun <T> of(
             variableId: Int,
             positionId: Int,
+            position2Id: Int,
+            @LayoutRes layoutRes: Int
+        ): ItemBinding<T> {
+            return ItemBinding<T>().set(variableId, positionId, position2Id, layoutRes)
+        }
+
+        fun <T> of(
+            variableId: Int,
+            positionId: Int,
             @LayoutRes layoutRes: Int
         ): ItemBinding<T> {
             return ItemBinding<T>().set(variableId, positionId, layoutRes)
@@ -39,21 +48,29 @@ class ItemBinding<T> private constructor(
     private var _positionId: Int = 0
     val positionId get() = _positionId
 
+    private var _position2Id: Int = 0
+    val position2Id get() = _position2Id
+
     @LayoutRes
     private var _layoutRes = 0
     val layoutRes get() = _layoutRes
 
     private var _extraBindings: SparseArray<Any>? = null
 
-    fun set(variableId: Int, positionId: Int, @LayoutRes layoutRes: Int): ItemBinding<T> {
+    fun set(variableId: Int, positionId: Int, position2Id: Int, @LayoutRes layoutRes: Int): ItemBinding<T> {
         _variableId = variableId
         _positionId = positionId
+        _position2Id = position2Id
         _layoutRes = layoutRes
         return this
     }
 
+    fun set(variableId: Int, positionId: Int, @LayoutRes layoutRes: Int): ItemBinding<T> {
+        return set(variableId, positionId, ItemBinding.VAR_NONE, layoutRes)
+    }
+
     fun set(variableId: Int, @LayoutRes layoutRes: Int): ItemBinding<T> {
-        return set(variableId, ItemBinding.VAR_NONE, layoutRes)
+        return set(variableId, ItemBinding.VAR_NONE, ItemBinding.VAR_NONE, layoutRes)
     }
 
     fun variableId(variableId: Int): ItemBinding<T> {
@@ -96,7 +113,7 @@ class ItemBinding<T> private constructor(
         }
     }
 
-    fun bind(binding: ViewDataBinding, position: Int, item: T): Boolean {
+    fun bind(binding: ViewDataBinding, position: Int, position2: Int, item: T): Boolean {
         if (variableId == VAR_NONE) {
             return false
         }
@@ -109,11 +126,19 @@ class ItemBinding<T> private constructor(
             binding.setVariable(positionId, position)
         }
 
+        if (position2Id != ItemBinding.VAR_NONE) {
+            binding.setVariable(position2Id, position)
+        }
+
         _extraBindings?.forEach { key, value ->
             if (key != VAR_NONE) {
                 binding.setVariable(key, value)
             }
         }
         return true
+    }
+
+    fun bind(binding: ViewDataBinding, position: Int, item: T): Boolean {
+        return bind(binding, position, 0, item)
     }
 }

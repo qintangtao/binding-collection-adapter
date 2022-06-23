@@ -168,7 +168,7 @@ class BindingExpandableListViewAdapter<T, T2> : BaseExpandableListAdapter(),
         childPosition: Int,
         item: T2
     ) {
-        if (_childBinding.bind(binding, childPosition, item)) {
+        if (_childBinding.bind(binding, groupPosition, childPosition, item)) {
             binding.executePendingBindings()
         }
     }
