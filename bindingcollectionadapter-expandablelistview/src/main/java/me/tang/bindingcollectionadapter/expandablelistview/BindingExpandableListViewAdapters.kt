@@ -14,14 +14,17 @@ object BindingExpandableListViewAdapters {
     fun <T, T2> setAdapter(
         view: ExpandableListView,
         groupBinding: ItemBinding<T>,
-        groups: List<T>,
+        groups: List<T>?,
         childBinding: ItemBinding<T2>,
-        childrens: List<List<T2>>
+        childrens: List<List<T2>>?
     ) {
         requireNotNull(groupBinding) { "groupBinding must not be null" }
         requireNotNull(childBinding) { "childBinding must not be null" }
-        requireNotNull(groups) { "groups must not be null" }
-        requireNotNull(childrens) { "childrens must not be null" }
+        //requireNotNull(groups) { "groups must not be null" }
+        //requireNotNull(childrens) { "childrens must not be null" }
+
+        if (groups == null || childrens == null)
+            return
 
         val oldAdapter = view.expandableListAdapter
         var adapter = oldAdapter as? BindingExpandableListViewAdapter<T, T2>
