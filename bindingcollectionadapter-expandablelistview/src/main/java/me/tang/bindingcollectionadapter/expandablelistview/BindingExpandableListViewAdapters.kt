@@ -20,19 +20,22 @@ object BindingExpandableListViewAdapters {
     ) {
         requireNotNull(groupBinding) { "groupBinding must not be null" }
         requireNotNull(childBinding) { "childBinding must not be null" }
-        //requireNotNull(groups) { "groups must not be null" }
-        //requireNotNull(childrens) { "childrens must not be null" }
 
         if (groups == null || childrens == null)
             return
 
         val oldAdapter = view.expandableListAdapter
-        var adapter = oldAdapter as? BindingExpandableListViewAdapter<T, T2>
+
+        val adapter = oldAdapter as? BindingExpandableListViewAdapter<T, T2>
             ?: BindingExpandableListViewAdapter<T, T2>()
-        adapter.setGroupBinding(groupBinding)
-        adapter.setGroups(groups)
-        adapter.setChildBinding(childBinding)
-        adapter.setChilds(childrens)
+
+        adapter.apply {
+            setGroupBinding(groupBinding)
+            setGroups(groups!!)
+            setChildBinding(childBinding)
+            setChilds(childrens!!)
+        }
+
         if (oldAdapter != adapter)
             view.setAdapter(adapter)
     }

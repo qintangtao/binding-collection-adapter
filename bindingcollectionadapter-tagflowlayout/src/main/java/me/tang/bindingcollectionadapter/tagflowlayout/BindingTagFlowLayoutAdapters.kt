@@ -8,16 +8,27 @@ object BindingTagFlowLayoutAdapters {
 
     @JvmStatic
     @BindingAdapter(value = ["itemBinding", "items", "selected"], requireAll = false)
-    fun  <T>  setAdapter(layout: TagFlowLayout, itemBinding: ItemBinding<T>, items: List<T>?, selected: Int?) {
+    fun <T> setAdapter(
+        layout: TagFlowLayout,
+        itemBinding: ItemBinding<T>,
+        items: List<T>?,
+        selected: Int?
+    ) {
         requireNotNull(itemBinding) { "itemBinding must not be null" }
         items?.let {
-            val oldAdapter =  layout.adapter
-            var adapter = oldAdapter as? BindingTagFlowLayoutAdapter<T> ?: BindingTagFlowLayoutAdapter<T>(it)
-            adapter.setItemBinding(itemBinding)
-            adapter.setItems(it.toMutableList())
-            selected?.let {
-                if (selected > -1) layout.adapter?.setSelectedList(selected)
+            val oldAdapter = layout.adapter
+
+            val adapter =
+                oldAdapter as? BindingTagFlowLayoutAdapter<T> ?: BindingTagFlowLayoutAdapter<T>(it)
+
+            adapter.apply {
+                setItemBinding(itemBinding)
+                setItems(it.toMutableList())
+                selected?.let {
+                    if (selected > -1) setSelectedList(selected)
+                }
             }
+
             if (oldAdapter != adapter)
                 layout.adapter = adapter
         }
