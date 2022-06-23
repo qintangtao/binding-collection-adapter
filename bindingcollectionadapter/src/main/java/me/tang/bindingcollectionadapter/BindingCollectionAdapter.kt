@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 
-
 interface BindingCollectionAdapter<T> {
 
     fun setItemBinding(itemBinding: ItemBinding<T>)

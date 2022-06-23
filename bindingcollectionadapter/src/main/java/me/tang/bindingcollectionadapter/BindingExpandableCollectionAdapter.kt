@@ -29,7 +29,6 @@ interface BindingExpandableCollectionAdapter<T, T2> {
         viewGroup: ViewGroup
     ): ViewDataBinding
 
-
     fun onGroupBindBinding(
         binding: ViewDataBinding,
         variableId: Int,
